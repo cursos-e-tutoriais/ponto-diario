@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
   
-  final count = 0.obs;
+  final String urlMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  final subdomains = ['a', 'b', 'c'];
 
   @override
   void onInit() {}
@@ -13,6 +13,4 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
-
-  void increment() => count.value++;
 }
