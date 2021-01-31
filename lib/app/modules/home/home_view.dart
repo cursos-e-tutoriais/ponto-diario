@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import "package:latlong/latlong.dart" as latLng;
-import 'package:ponto_diario/app/modules/home/controllers/home_controller.dart';
+import 'package:ponto_diario/app/modules/home/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   @override

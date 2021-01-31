@@ -1,5 +1,5 @@
-import 'package:ponto_diario/app/modules/home/views/home_view.dart';
-import 'package:ponto_diario/app/modules/home/bindings/home_binding.dart';
+import 'package:ponto_diario/app/modules/home/home_view.dart';
+import 'package:ponto_diario/app/modules/home/home_binding.dart';
 import 'package:get/get.dart';
 part 'app_routes.dart';
 
