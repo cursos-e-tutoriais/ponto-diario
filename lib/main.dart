@@ -5,11 +5,16 @@ import 'app/routes/app_pages.dart';
 
 void main() {
   runApp(
-    GetMaterialApp(
+    GetMaterialApp(      
       debugShowCheckedModeBanner: false,
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      color: Colors.green,
+      theme: ThemeData(
+        primaryColorLight: Colors.white,
+        accentColor: Colors.white,
+      ),
     ),
   );
 }

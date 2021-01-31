@@ -1,4 +1,3 @@
-import 'package:flutter_map/plugin_api.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 
@@ -6,11 +5,16 @@ class HomeController extends GetxController {
   
   final String urlMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   final subdomains = ['a', 'b', 'c'];
-  MapController mapController = MapController();
   Location location = Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
+  int selectedIndex = 0;
+
+  void onTapped(i) {
+    selectedIndex = i;
+    update();
+  }
 
   @override
   void onInit() async {
@@ -37,10 +41,4 @@ class HomeController extends GetxController {
       }
     }
   }
-
-  @override
-  void onReady() {}
-
-  @override
-  void onClose() {}
 }
