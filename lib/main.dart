@@ -12,6 +12,7 @@ void main() {
       getPages: AppPages.routes,
       color: Colors.green,
       theme: ThemeData(
+        primarySwatch: Colors.green,
         primaryColorLight: Colors.white,
         accentColor: Colors.white,
       ),
