@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-Widget textFormField(String label, String hint, bool obscure) {
+Widget textFormField(TextEditingController controller, String label, String hint, bool obscure) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.grey[300],
       borderRadius: BorderRadius.circular(15),
     ),
     child: TextFormField(
+      controller: controller,
       obscureText: obscure,
       validator: (value) {
         if (value.isEmpty) {
@@ -21,7 +22,7 @@ Widget textFormField(String label, String hint, bool obscure) {
             borderSide: BorderSide(width: 2),
             borderRadius: BorderRadius.circular(15)),
       ),
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
     ),
   );
 }

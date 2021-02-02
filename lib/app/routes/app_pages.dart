@@ -1,6 +1,7 @@
 import 'package:ponto_diario/app/modules/home/home_page.dart';
 import 'package:ponto_diario/app/modules/home/home_binding.dart';
 import 'package:get/get.dart';
+import 'package:ponto_diario/app/modules/login/login_bindings.dart';
 import 'package:ponto_diario/app/modules/login/login_page.dart';
 part 'app_routes.dart';
 
@@ -17,6 +18,7 @@ static const INITIAL = Routes.LOGIN;
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginPage(),
+      binding: LoginBindings(),
     ),
   ];
 }

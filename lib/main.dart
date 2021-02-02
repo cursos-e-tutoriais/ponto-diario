@@ -13,8 +13,6 @@ void main() {
       color: Colors.green,
       theme: ThemeData(
         primarySwatch: Colors.green,
-        primaryColorLight: Colors.white,
-        accentColor: Colors.white,
       ),
     ),
   );

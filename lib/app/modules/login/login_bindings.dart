@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:ponto_diario/app/modules/login/login_controller.dart';
+import 'package:ponto_diario/app/modules/login/login_repository.dart';
 
 class LoginBindings implements Bindings {
-  @override 
+  @override
   void dependencies() {
-    Get.put(() => LoginController());
+    Get.lazyPut(
+      () => LoginController(loginRepository: LoginRepository()),
+    );
   }
 }
