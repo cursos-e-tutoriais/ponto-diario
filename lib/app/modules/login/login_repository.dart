@@ -9,7 +9,9 @@ class LoginRepository extends GetConnect {
       "pass": pass,
     };
 
-    var res = await post('127.0.0.1:8080/api/v1/login', data);
+    var res = await post('http://127.0.0.1:8080/api/v1/login', data);
+
+    print(res.statusCode);
 
     if (res.statusCode == 200){
       prefs.setString('token', res.body['token']);
