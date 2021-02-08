@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:ponto_diario/app/modules/home/local_components/settings_page.dart';
+
+import 'local_components/initial_page.dart';
 
 class HomeController extends GetxController {
   
@@ -10,9 +14,9 @@ class HomeController extends GetxController {
   PermissionStatus _permissionGranted;
   LocationData _locationData;
   int selectedIndex = 0;
+  var date = DateTime.now();
 
-  void onTapped(i) {
-    selectedIndex = i;
+  void onTapped(i) async {
     update();
   }
 
