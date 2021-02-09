@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ponto_diario/app/modules/splash/splash_controller.dart';
 
-class SplashPage extends GetView{
-  @override 
+class SplashPage extends GetView<SplashController> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.green,
-      child: Center(
-        child: Text(
-          'Ponto Diário',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: MediaQuery.of(context).size.height * 0.1,
-          ),
-        ),
-      )
+    return Scaffold(
+      backgroundColor: Colors.green,
+      body: GetBuilder<SplashController>(
+        builder: (_) {
+          return Center(
+            child: Text(
+              'Ponto Diário',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.of(context).size.height * 0.07,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

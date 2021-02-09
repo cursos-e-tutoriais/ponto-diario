@@ -5,13 +5,17 @@ import 'package:ponto_diario/app/modules/splash/splash_repository.dart';
 class SplashController extends GetxController{
   final SplashRepository splashRepository;
 
-  SplashController({@required this.splashRepository}): assert(splashRepository != null);
-  @override 
-  void onInit() async {
-    super.onInit();
+  SplashController({@required this.splashRepository});
+
+  checkIfIsLogged() async {
     await Future.delayed(Duration(seconds: 2));
     await splashRepository.checkIfIsLogged()
-      ? Get.toNamed('/home')
-      : Get.toNamed('/login');
+      ? Get.offAllNamed('/home')
+      : Get.offAllNamed('/login');
+  }
+  @override 
+  void onInit() async {
+    checkIfIsLogged();
+    super.onInit();
   }
 }
