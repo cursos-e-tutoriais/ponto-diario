@@ -3,14 +3,11 @@ import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
-  
-  final String urlMap = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  final subdomains = ['a', 'b', 'c'];
   Location location = Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
-  int selectedIndex = 0;
+  bool isClicked = false;
   var date = DateTime.now();
 
   @override
@@ -21,11 +18,29 @@ class HomeController extends GetxController {
     print(_locationData);
   }
 
-  saveCurrentyHour() async {
+  initPoint() async {
+    var hour = DateTime.now();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String initHour = '${date.hour}:${date.minute}:${date.second}';
-    print(initHour);
-    //prefs.setString('initHour', initHour);
+    String initHour = '${hour.hour}:${hour.minute}:${hour.second}';    
+    print('Iniciado às: $initHour');
+    String initHourSaved = prefs.getString('initHour');
+    if ((isClicked == true) && (initHour != initHourSaved)){
+      prefs.setString('initHour', initHour);
+      initHour = initHourSaved;
+    }
+    update();
+  }
+
+  endPoint() async {
+    var hour = DateTime.now();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String finalHour = '${hour.hour}:${hour.minute}:${hour.second}';
+    print('Finalizado às: $finalHour');
+    String finalHourSaved = prefs.getString('finalHour');
+    if ((isClicked == false) && (finalHour != finalHourSaved)){
+      prefs.setString('finalHour', finalHour);
+    }
+    update();
   }
 
   checkPermission() async {

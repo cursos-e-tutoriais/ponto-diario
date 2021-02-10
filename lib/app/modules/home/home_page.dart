@@ -67,29 +67,65 @@ class HomePage extends GetView<HomeController> {
             bottom: MediaQuery.of(context).size.height * 0.01,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.40,
               child: Column(
                 children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text('hora'),
+                        Text('hora'),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30.0),
                   GestureDetector(
                     onTap: () {
-                      controller.saveCurrentyHour();
+                      if (controller.isClicked == false) {
+                        controller.isClicked = true;
+                        controller.initPoint();
+                      } else {
+                        controller.isClicked = false;
+                        controller.endPoint();
+                      }
                     },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.green,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Registrar ponto',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
+                    child: GetBuilder<HomeController>(
+                      builder: (_) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: _.isClicked
+                                ? Colors.orange
+                                : Colors.green,
                           ),
-                        ),
-                      ),
+                          child: Center(
+                            child: controller.isClicked
+                                ? Text(
+                                    'Finalizar ponto',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                                : Text(
+                                    'Iniciar ponto',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: 20),
