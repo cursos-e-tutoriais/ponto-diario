@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ponto_diario/app/modules/home/home_controller.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 class HomePage extends GetView<HomeController> {
   @override
@@ -47,24 +48,67 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
           Positioned(
+            top: MediaQuery.of(context).size.height * 0.3,
+            child: DigitalClock(
+              digitAnimationStyle: Curves.elasticOut,
+              is24HourTimeFormat: true,
+              areaDecoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
+              hourMinuteDigitTextStyle: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 50,
+              ),
+              amPmDigitTextStyle: TextStyle(
+                  color: Colors.blueGrey, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Positioned(
             bottom: MediaQuery.of(context).size.height * 0.01,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: Column(
                 children: [
-                  FloatingActionButton(
-                    heroTag: '1',
-                    onPressed: null,
-                    child: Icon(Icons.menu),
-                    backgroundColor: Colors.green,
+                  GestureDetector(
+                    onTap: () {
+                      controller.saveCurrentyHour();
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.green,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Registrar ponto',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  FloatingActionButton(
-                    heroTag: '2',
-                    onPressed: null,
-                    child: Icon(Icons.settings),
-                    backgroundColor: Colors.green,
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: '1',
+                        onPressed: null,
+                        child: Icon(Icons.menu),
+                        backgroundColor: Colors.green,
+                      ),
+                      FloatingActionButton(
+                        heroTag: '2',
+                        onPressed: null,
+                        child: Icon(Icons.settings),
+                        backgroundColor: Colors.green,
+                      ),
+                    ],
                   ),
                 ],
               ),

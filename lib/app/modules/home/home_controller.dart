@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
   
@@ -12,17 +13,19 @@ class HomeController extends GetxController {
   int selectedIndex = 0;
   var date = DateTime.now();
 
-  void onTapped(i) async {
-    update();
-  }
-
   @override
   void onInit() async {
     super.onInit();
     await checkPermission();
     _locationData = await location.getLocation();
     print(_locationData);
-    
+  }
+
+  saveCurrentyHour() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String initHour = '${date.hour}:${date.minute}:${date.second}';
+    print(initHour);
+    //prefs.setString('initHour', initHour);
   }
 
   checkPermission() async {
