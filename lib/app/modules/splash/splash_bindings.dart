@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ponto_diario/app/modules/splash/splash_controller.dart';
-import 'package:ponto_diario/app/modules/splash/splash_repository.dart';
+import 'package:ponto_diario/app/repositories/splash_repository.dart';
 
 class SplashBindings implements Bindings {
   @override 

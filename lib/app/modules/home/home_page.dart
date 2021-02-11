@@ -140,7 +140,7 @@ class HomePage extends GetView<HomeController> {
                       ),
                       FloatingActionButton(
                         heroTag: '2',
-                        onPressed: null,
+                        onPressed: () {controller.goToSettingsPage();},
                         child: Icon(Icons.settings),
                         backgroundColor: Colors.green,
                       ),

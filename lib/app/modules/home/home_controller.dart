@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:ponto_diario/app/modules/home/home_repository.dart';
+import 'package:ponto_diario/app/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -85,6 +85,10 @@ class HomeController extends GetxController {
   logout() async {
     bool isLogged = await homeRepository.logout();
     isLogged ? Get.offAllNamed('/login') : Get.back();
+  }
+
+  goToSettingsPage() {
+    Get.toNamed('/settings');
   }
 
 }

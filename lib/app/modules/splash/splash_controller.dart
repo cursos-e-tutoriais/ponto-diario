@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:ponto_diario/app/modules/splash/splash_repository.dart';
+import 'package:ponto_diario/app/repositories/splash_repository.dart';
 
 class SplashController extends GetxController{
   final SplashRepository splashRepository;
