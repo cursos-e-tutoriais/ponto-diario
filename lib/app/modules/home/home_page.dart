@@ -33,7 +33,7 @@ class HomePage extends GetView<HomeController> {
                       IconButton(
                         icon: Icon(Icons.exit_to_app),
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {controller.logout();},
                       ),
                     ],
                   ),
@@ -77,13 +77,15 @@ class HomePage extends GetView<HomeController> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.grey,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text('hora'),
-                        Text('hora'),
-                      ],
-                    ),
+                    child: GetBuilder<HomeController>(builder: (_) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(_.init == null || _.init == '' ? 'inicio' : _.init.toString()),
+                          Text(_.end == null || _.end == '' ? 'final' : _.end.toString()),
+                        ],
+                      );
+                    }),
                   ),
                   SizedBox(height: 30.0),
                   GestureDetector(
@@ -103,9 +105,7 @@ class HomePage extends GetView<HomeController> {
                           height: MediaQuery.of(context).size.height * 0.1,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: _.isClicked
-                                ? Colors.orange
-                                : Colors.green,
+                            color: _.isClicked ? Colors.orange : Colors.green,
                           ),
                           child: Center(
                             child: controller.isClicked
