@@ -55,13 +55,18 @@ class SettingsPage extends GetView<SettingsController> {
                           children: [
                             Text(_.obs[i].displayName),
                             SizedBox(height: 10.0),
-                            Text('Latitude: '+ _.obs[i].lat),
+                            Text('Latitude: ' + _.obs[i].lat),
                             SizedBox(height: 10.0),
-                            Text('Longitude: '+ _.obs[i].lon),
+                            Text('Longitude: ' + _.obs[i].lon),
                             SizedBox(height: 10.0),
                             Center(
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  controller.registerWorkLocation(
+                                    _.obs[i].lat,
+                                    _.obs[i].lon,
+                                  );
+                                },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   height:

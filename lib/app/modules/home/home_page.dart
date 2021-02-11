@@ -33,7 +33,9 @@ class HomePage extends GetView<HomeController> {
                       IconButton(
                         icon: Icon(Icons.exit_to_app),
                         color: Colors.white,
-                        onPressed: () {controller.logout();},
+                        onPressed: () {
+                          controller.logout();
+                        },
                       ),
                     ],
                   ),
@@ -81,23 +83,19 @@ class HomePage extends GetView<HomeController> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(_.init == null || _.init == '' ? 'inicio' : _.init.toString()),
-                          Text(_.end == null || _.end == '' ? 'final' : _.end.toString()),
+                          Text(_.init == null || _.init == ''
+                              ? 'inicio'
+                              : _.init.toString()),
+                          Text(_.end == null || _.end == ''
+                              ? 'final'
+                              : _.end.toString()),
                         ],
                       );
                     }),
                   ),
                   SizedBox(height: 30.0),
                   GestureDetector(
-                    onTap: () {
-                      if (controller.isClicked == false) {
-                        controller.isClicked = true;
-                        controller.initPoint();
-                      } else {
-                        controller.isClicked = false;
-                        controller.endPoint();
-                      }
-                    },
+                    onTap: controller.buttonClicked,
                     child: GetBuilder<HomeController>(
                       builder: (_) {
                         return Container(
@@ -140,7 +138,9 @@ class HomePage extends GetView<HomeController> {
                       ),
                       FloatingActionButton(
                         heroTag: '2',
-                        onPressed: () {controller.goToSettingsPage();},
+                        onPressed: () {
+                          controller.goToSettingsPage();
+                        },
                         child: Icon(Icons.settings),
                         backgroundColor: Colors.green,
                       ),

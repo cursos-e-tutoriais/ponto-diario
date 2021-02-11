@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ponto_diario/app/models/nominatim_model.dart';
 import 'package:ponto_diario/app/repositories/settings_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsController extends GetxController with StateMixin<List<NominatimModel>> {
   final SettingsRepository settingsRepository;
   SettingsController({ @required this.settingsRepository });
 
+  final streetController = TextEditingController();
   bool addressReceived = false;
-  var streetController = TextEditingController();
+  SharedPreferences prefs;
 
   void onInit() async {
     super.onInit();
@@ -23,5 +25,14 @@ class SettingsController extends GetxController with StateMixin<List<NominatimMo
       addressReceived = false;
       change(null, status: RxStatus.error('Não foram encontrados endereços $e'));
     });
+  }
+
+  registerWorkLocation(String lat, String lng) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.setString('latWork', lat);
+    prefs.setString('lngWork', lng);
+    prefs.setBool('isWorkLocationRegistered', true);
+    Get.back();
+    update();
   }
 }
