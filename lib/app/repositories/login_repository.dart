@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ponto_diario/app/shared/utils.dart';
 
 class LoginRepository extends GetConnect {
   login(email, pass) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map data = {
       "email": email,
       "pass": pass,
@@ -14,7 +13,7 @@ class LoginRepository extends GetConnect {
     print(res.statusCode);
 
     if (res.statusCode == 200){
-      prefs.setString('token', res.body['token']);
+      box.write('token', res.body['token']);
       return true;
     } else {
       return false;

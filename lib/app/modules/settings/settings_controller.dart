@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ponto_diario/app/models/nominatim_model.dart';
 import 'package:ponto_diario/app/repositories/settings_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ponto_diario/app/shared/utils.dart';
 
 class SettingsController extends GetxController with StateMixin<List<NominatimModel>> {
   final SettingsRepository settingsRepository;
@@ -10,7 +10,6 @@ class SettingsController extends GetxController with StateMixin<List<NominatimMo
 
   final streetController = TextEditingController();
   bool addressReceived = false;
-  SharedPreferences prefs;
 
   void onInit() async {
     super.onInit();
@@ -28,10 +27,9 @@ class SettingsController extends GetxController with StateMixin<List<NominatimMo
   }
 
   registerWorkLocation(String lat, String lng) async {
-    prefs = await SharedPreferences.getInstance();
-    prefs.setString('latWork', lat);
-    prefs.setString('lngWork', lng);
-    prefs.setBool('isWorkLocationRegistered', true);
+    box.write('latWork', lat);
+    box.write('lngWork', lng);
+    box.write('isWorkLocationRegistered', true);
     Get.back();
     update();
   }

@@ -8,7 +8,7 @@ dependencies:
   geolocator: ^6.2.0
   get: ^3.24.0
   slide_digital_clock: ^1.0.0
-  shared_preferences: ^0.5.12+4
+  get_storage: ^1.4.0
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0

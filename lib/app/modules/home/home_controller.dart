@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:ponto_diario/app/repositories/home_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ponto_diario/app/shared/utils.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomeController extends GetxController {
@@ -11,7 +11,6 @@ class HomeController extends GetxController {
       : assert(homeRepository != null);
 
   bool isClicked = false;
-  SharedPreferences prefs;
   bool serviceEnabled;
   LocationPermission permission;
   Position position;
@@ -41,8 +40,7 @@ class HomeController extends GetxController {
   set workRegistered(value) => _workRegistered.value = value;
 
   checkWorkLocationCondition() async {
-    prefs = await SharedPreferences.getInstance();
-    bool isWorkLocationRegistered = prefs.getBool('isWorkLocationRegistered');
+    bool isWorkLocationRegistered = box.read('isWorkLocationRegistered');
     workRegistered = isWorkLocationRegistered;
     print(workRegistered);
     update();
@@ -77,11 +75,10 @@ class HomeController extends GetxController {
 
   initPoint() async {
     var hour = DateTime.now();
-    prefs = await SharedPreferences.getInstance();
     String initHour = '${hour.hour}:${hour.minute}:${hour.second}';
-    String initHourSaved = prefs.getString('initHour');
+    String initHourSaved = box.read('initHour');
     if ((isClicked == true) && (initHour != initHourSaved)) {
-      prefs.setString('initHour', initHour);
+      box.write('initHour', initHour);
       init = initHour;
     }
     update();
@@ -89,11 +86,10 @@ class HomeController extends GetxController {
 
   endPoint() async {
     var hour = DateTime.now();
-    prefs = await SharedPreferences.getInstance();
     String finalHour = '${hour.hour}:${hour.minute}:${hour.second}';
-    String finalHourSaved = prefs.getString('finalHour');
+    String finalHourSaved = box.read('finalHour');
     if ((isClicked == false) && (finalHour != finalHourSaved)) {
-      prefs.setString('finalHour', finalHour);
+      box.write('finalHour', finalHour);
       end = finalHour;
     }
     update();
@@ -115,11 +111,9 @@ class HomeController extends GetxController {
   }
 
   logout() async {
-    prefs = await SharedPreferences.getInstance();
-    //bool isLogged = await homeRepository.logout();
-    prefs.setString('token', null);
-    prefs.setBool('isWorkLocationRegistered', false);
-    prefs.setString('token', null);
+    box.write('token', null);
+    box.write('isWorkLocationRegistered', false);
+    box.write('token', null);
     Get.offAllNamed('/login');
   }
 
