@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ponto_diario/app/modules/login/login_controller.dart';
+import 'package:ponto_diario/app/modules/login/login_page.dart';
 import 'package:ponto_diario/app/modules/splash/splash_controller.dart';
 import 'package:ponto_diario/app/modules/splash/splash_state.dart';
+import 'package:ponto_diario/locator.dart';
 
 class SplashPage extends StatelessWidget {
   @override
@@ -24,11 +27,21 @@ class SplashPage extends StatelessWidget {
               ),
             );
           } else if (state is SplashLoaded) {
-            if (state.isLogged) {
-              Navigator.pushReplacementNamed(context, '/home');
-            } else {
-              Navigator.pushReplacementNamed(context, '/login');
-            }
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              if (state.isLogged) {
+                Navigator.pushReplacementNamed(context, '/home');
+              } else {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: getIt.get<LoginController>(),
+                      child: LoginPage(),
+                    ),
+                  ),
+                );
+              }
+            });
           }
           return Container();
         },
