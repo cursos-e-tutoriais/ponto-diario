@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:ponto_diario/app/core/utils.dart';
 import 'package:ponto_diario/app/shared/utils.dart';
 
 class SplashRepository {
@@ -10,7 +9,7 @@ class SplashRepository {
     try {
       var token = box.read('token');
       final res = await dio.get(
-        '${Utils.urlBase}/data',
+        '/data',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ponto_diario/app/modules/home/home_controller.dart';
+import 'package:ponto_diario/app/modules/home/home_page.dart';
 import 'package:ponto_diario/app/modules/login/login_controller.dart';
 import 'package:ponto_diario/app/modules/login/login_page.dart';
 import 'package:ponto_diario/app/modules/splash/splash_controller.dart';
@@ -29,7 +31,15 @@ class SplashPage extends StatelessWidget {
           } else if (state is SplashLoaded) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               if (state.isLogged) {
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: getIt.get<HomeController>(),
+                      child: HomePage(),
+                    ),
+                  ),
+                );
               } else {
                 Navigator.pushReplacement(
                   context,

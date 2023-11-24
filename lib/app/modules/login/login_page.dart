@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ponto_diario/app/modules/home/home_controller.dart';
 import 'package:ponto_diario/app/modules/home/home_page.dart';
 import 'package:ponto_diario/app/modules/login/login_controller.dart';
 import 'package:ponto_diario/app/modules/login/login_state.dart';
 import 'package:ponto_diario/app/shared/utils.dart';
+import 'package:ponto_diario/locator.dart';
 
 import 'widgets/text_form_field.dart';
 
@@ -70,7 +72,10 @@ class LoginPage extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => HomePage(),
+                                    builder: (_) => BlocProvider.value(
+                                      value: getIt.get<HomeController>(),
+                                      child: HomePage(),
+                                    ),
                                   ),
                                 );
                               }

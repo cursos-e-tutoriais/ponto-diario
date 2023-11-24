@@ -1,51 +1,48 @@
-import 'package:get/get.dart';
+import 'package:bloc/bloc.dart';
+import 'package:ponto_diario/app/modules/home/home_state.dart';
 import 'package:ponto_diario/app/repositories/home_repository.dart';
 import 'package:ponto_diario/app/shared/utils.dart';
 import 'package:geolocator/geolocator.dart';
 
-class HomeController extends GetxController {
-  final HomeRepository? homeRepository;
+class HomeController extends Cubit<HomeState> {
+  final HomeRepository homeRepository;
 
-  HomeController({required this.homeRepository})
-      : assert(homeRepository != null);
+  HomeController({required this.homeRepository}) : super(HomeInitial());
 
   bool isClicked = false;
   late bool serviceEnabled;
   late LocationPermission permission;
   var date = DateTime.now();
 
-  @override
   void onInit() async {
-    super.onInit();
     await checkPermission();
     await checkWorkLocationCondition();
   }
 
-  final _init = ''.obs;
+  String _init = '';
   get init => _init;
-  set init(value) => _init.value = value;
+  set init(value) => _init = value;
 
-  final _end = ''.obs;
+  String _end = '';
   get end => _end;
-  set end(value) => _end.value = value;
+  set end(value) => _end = value;
 
-  final _position = Rx<Position?>(null);
-  Position? get positionActual => _position.value;
+  late Position _position;
+  Position get positionActual => _position;
 
-  set positionActual(Position? value) => _position.value = value;
+  set positionActual(Position value) => _position = value;
 
-  final _workRegistered = false.obs;
-  get workRegistered => _workRegistered.value;
-  set workRegistered(value) => _workRegistered.value = value;
+  bool _workLocationRegistered = false;
+  get workLocationRegistered => _workLocationRegistered;
+  set workLocationRegistered(value) => _workLocationRegistered = value;
 
-  checkWorkLocationCondition() async {
+  Future<void> checkWorkLocationCondition() async {
     bool isWorkLocationRegistered = box.read('isWorkLocationRegistered');
-    workRegistered = isWorkLocationRegistered;
-    print(workRegistered);
-    update();
+    workLocationRegistered = isWorkLocationRegistered;
+    print(workLocationRegistered);
   }
 
-  checkPermission() async {
+  Future checkPermission() async {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('O serviço de localização foi desabilitado!');
@@ -72,7 +69,7 @@ class HomeController extends GetxController {
     return _currentPosition;
   }
 
-  initPoint() async {
+  Future<void> initPoint() async {
     var hour = DateTime.now();
     String initHour = '${hour.hour}:${hour.minute}:${hour.second}';
     String initHourSaved = box.read('initHour');
@@ -80,10 +77,9 @@ class HomeController extends GetxController {
       box.write('initHour', initHour);
       init = initHour;
     }
-    update();
   }
 
-  endPoint() async {
+  Future<void> endPoint() async {
     var hour = DateTime.now();
     String finalHour = '${hour.hour}:${hour.minute}:${hour.second}';
     String finalHourSaved = box.read('finalHour');
@@ -91,32 +87,24 @@ class HomeController extends GetxController {
       box.write('finalHour', finalHour);
       end = finalHour;
     }
-    update();
   }
 
-  buttonClicked() {
-    if (isClicked == false && workRegistered == true) {
+  bool? canInitPoint() {
+    if (isClicked == false && workLocationRegistered == true) {
       isClicked = true;
       initPoint();
-    } else if (isClicked == true && workRegistered == true) {
+    } else if (isClicked == true && workLocationRegistered == true) {
       isClicked = false;
       endPoint();
     } else {
-      Get.snackbar(
-        'Oops!',
-        'Olá Para poder registrar ponto, cadastre a localização do seu trabalho.\nPara fazer isso é só acessar as configurações do app!',
-      );
+      return false;
     }
+    return true;
   }
 
-  logout() async {
+  Future<void> logout() async {
     box.write('token', null);
     box.write('isWorkLocationRegistered', false);
     box.write('token', null);
-    Get.offAllNamed('/login');
-  }
-
-  goToSettingsPage() {
-    Get.toNamed('/settings');
   }
 }
