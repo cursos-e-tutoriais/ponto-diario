@@ -70,23 +70,27 @@ class HomeController extends Cubit<HomeState> {
   }
 
   Future<void> initPoint() async {
-    var hour = DateTime.now();
+    emit(HomeInitial());
+    var hour = DateTime.now().subtract(Duration(hours: 3));
     String initHour = '${hour.hour}:${hour.minute}:${hour.second}';
-    String initHourSaved = box.read('initHour');
+    String? initHourSaved = box.read('initHour');
     if ((isClicked == true) && (initHour != initHourSaved)) {
       box.write('initHour', initHour);
       init = initHour;
     }
+    emit(HomeInitial());
   }
 
   Future<void> endPoint() async {
-    var hour = DateTime.now();
+    emit(HomeInitial());
+    var hour = DateTime.now().subtract(Duration(hours: 3));
     String finalHour = '${hour.hour}:${hour.minute}:${hour.second}';
-    String finalHourSaved = box.read('finalHour');
+    String? finalHourSaved = box.read('finalHour');
     if ((isClicked == false) && (finalHour != finalHourSaved)) {
       box.write('finalHour', finalHour);
       end = finalHour;
     }
+    emit(HomeInitial());
   }
 
   bool? canInitPoint() {

@@ -4,6 +4,7 @@ import 'package:ponto_diario/app/modules/home/home_controller.dart';
 import 'package:ponto_diario/app/modules/home/home_state.dart';
 import 'package:ponto_diario/app/modules/login/login_controller.dart';
 import 'package:ponto_diario/app/modules/login/login_page.dart';
+import 'package:ponto_diario/app/modules/settings/settings_controller.dart';
 import 'package:ponto_diario/app/modules/settings/settings_page.dart';
 import 'package:ponto_diario/locator.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
@@ -71,7 +72,9 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.3,
+              top: MediaQuery.sizeOf(context).height * 0.3,
+              left: MediaQuery.sizeOf(context).width * 0.1,
+              right: MediaQuery.sizeOf(context).width * 0.1,
               child: DigitalClock(
                 digitAnimationStyle: Curves.elasticOut,
                 is24HourTimeFormat: true,
@@ -137,23 +140,25 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           color: cubit.isClicked ? Colors.orange : Colors.green,
                         ),
-                        child: Center(
-                          child: cubit.isClicked
-                              ? Text(
-                                  'Finalizar ponto',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
+                        child: Builder(builder: (context) {
+                          return Center(
+                            child: cubit.isClicked
+                                ? Text(
+                                    'Finalizar ponto',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                                : Text(
+                                    'Iniciar ponto',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
                                   ),
-                                )
-                              : Text(
-                                  'Iniciar ponto',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                        ),
+                          );
+                        }),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -172,7 +177,10 @@ class HomePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => SettingsPage(),
+                                builder: (_) => BlocProvider.value(
+                                  value: getIt.get<SettingsController>(),
+                                  child: SettingsPage(),
+                                ),
                               ),
                             );
                           },
